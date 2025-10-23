@@ -47,3 +47,46 @@ class NewsTicker(models.Model):
 
     def __str__(self):
         return self.message
+
+
+
+class RareBloodDonor(models.Model):
+    BLOOD_GROUP_CHOICES = [
+        ('A-', 'A−'),
+        ('B-', 'B−'),
+        ('AB-', 'AB−'),
+        ('O-', 'O−'),
+        ('A2B-', 'A2B−'),
+        ('Bombay', 'Bombay (hh)'),
+        ('Rhnull', 'Rh null'),
+        ('Other', 'Other (specify below)'),
+    ]
+
+    name = models.CharField(max_length=100)
+    blood_group = models.CharField(max_length=20, choices=BLOOD_GROUP_CHOICES)
+    custom_blood_type = models.CharField(
+        max_length=50, blank=True, null=True, help_text="If not listed above"
+    )
+    age = models.PositiveIntegerField(blank=True, null=True)
+    gender = models.CharField(
+        max_length=10,
+        choices=[('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')],
+        blank=True,
+        null=True,
+    )
+    phone = models.CharField(max_length=20, help_text="Include country code if possible")
+    email = models.EmailField(blank=True, null=True)
+    location = models.CharField(max_length=150, help_text="City / Hospital / Area")
+    availability = models.BooleanField(default=True, help_text="Available for donation?")
+    last_donated = models.DateField(blank=True, null=True)
+    added_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} ({self.blood_group})"
+
+    class Meta:
+        verbose_name = "Rare Blood Donor"
+        verbose_name_plural = "Rare Blood Directory"
+        ordering = ['blood_group', 'name']
+
+
