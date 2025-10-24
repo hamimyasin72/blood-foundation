@@ -1,6 +1,8 @@
 from django.contrib import admin
 from .models import  Article,Member, CarouselSlide
 from .models import NewsTicker
+ 
+from .models import RareBloodDonor
 admin.site.register(NewsTicker)
 
 
@@ -25,5 +27,50 @@ class CarouselSlideAdmin(admin.ModelAdmin):
     list_display = ("title", "order")
     list_editable = ("order",)
 
+ 
 
+@admin.register(RareBloodDonor)
+class RareBloodDonorAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'blood_group',
+        'location',
+        'availability',
+        'last_donated',
+        'added_on',
+    )
+    list_filter = (
+        'blood_group',
+        'availability',
+        'gender',
+        'location',
+    )
+    search_fields = (
+        'name',
+        'phone',
+        'email',
+        'location',
+        'blood_group',
+    )
+    ordering = ('blood_group', 'name')
+    list_editable = ('availability', 'last_donated')
+    readonly_fields = ('added_on',)
+    list_per_page = 25
+    fieldsets = (
+        ("Personal Information", {
+            'fields': ('name', 'age', 'gender')
+        }),
+        ("Blood Details", {
+            'fields': ('blood_group', 'custom_blood_type', 'last_donated', 'availability')
+        }),
+        ("Contact Information", {
+            'fields': ('phone', 'email', 'location')
+        }),
+        ("System Info", {
+            'fields': ('added_on',),
+            'classes': ('collapse',)
+        }),
+    )
+
+ 
  
