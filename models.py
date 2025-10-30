@@ -90,8 +90,57 @@ class RareBloodDonor(models.Model):
         ordering = ['blood_group', 'name']
 
 
+  
 
-lass Donor(models.Model):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+class DonationRequest(models.Model):
+    STATUS_CHOICES = [
+        ('Pending', 'Pending'),
+        ('Completed', 'Completed'),
+        ('Cancelled', 'Cancelled')
+    ]
+
+    patient_name = models.CharField(max_length=100)
+    required_blood_group = models.CharField(max_length=3, choices=Donor.BLOOD_GROUPS)
+    units_needed = models.PositiveIntegerField()
+    hospital_name = models.CharField(max_length=200)
+    request_date = models.DateField(auto_now_add=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending')
+    fulfilled_by = models.ForeignKey(Donor, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return f"Request for {self.required_blood_group} ({self.units_needed} units)"
+class Donor(models.Model):
     BLOOD_GROUPS = [
         ('A+', 'A+'), ('A-', 'A-'),
         ('B+', 'B+'), ('B-', 'B-'),
@@ -111,4 +160,5 @@ lass Donor(models.Model):
     def __str__(self):
         return f"{self.name} ({self.blood_group})"
 
+ 
 
