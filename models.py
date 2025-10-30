@@ -90,8 +90,7 @@ class RareBloodDonor(models.Model):
         ordering = ['blood_group', 'name']
 
 
-
-
+  
 
 
 
@@ -141,4 +140,25 @@ class DonationRequest(models.Model):
 
     def __str__(self):
         return f"Request for {self.required_blood_group} ({self.units_needed} units)"
+class Donor(models.Model):
+    BLOOD_GROUPS = [
+        ('A+', 'A+'), ('A-', 'A-'),
+        ('B+', 'B+'), ('B-', 'B-'),
+        ('O+', 'O+'), ('O-', 'O-'),
+        ('AB+', 'AB+'), ('AB-', 'AB-')
+    ]
+
+    name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    phone = models.CharField(max_length=15)
+    blood_group = models.CharField(max_length=3, choices=BLOOD_GROUPS)
+    last_donation_date = models.DateField(null=True, blank=True)
+    location = models.CharField(max_length=200)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} ({self.blood_group})"
+
+ 
 
