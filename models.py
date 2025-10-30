@@ -90,7 +90,6 @@ class RareBloodDonor(models.Model):
         ordering = ['blood_group', 'name']
 
 
-  
 
 
 
@@ -98,30 +97,6 @@ class RareBloodDonor(models.Model):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
 
 class DonationRequest(models.Model):
     STATUS_CHOICES = [
@@ -140,6 +115,7 @@ class DonationRequest(models.Model):
 
     def __str__(self):
         return f"Request for {self.required_blood_group} ({self.units_needed} units)"
+
 class Donor(models.Model):
     BLOOD_GROUPS = [
         ('A+', 'A+'), ('A-', 'A-'),
